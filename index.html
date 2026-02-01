@@ -9,7 +9,8 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
     }
 
     body {
@@ -42,23 +43,38 @@
       opacity: 0.8;
     }
 
-    /* Scales correctly with the randomized heart size */
     .heart::before,
     .heart::after {
       content: "";
       position: absolute;
-      width: 100%;
-      height: 100%;
+      width: 18px;
+      height: 18px;
       border-radius: 50%;
       background: #ff6b9c;
     }
-    .heart::before { left: -50%; top: 0; }
-    .heart::after  { left: 0; top: -50%; }
+
+    .heart::before {
+      left: -9px;
+      top: 0;
+    }
+
+    .heart::after {
+      top: -9px;
+      left: 0;
+    }
 
     @keyframes floatUp {
-      0% { transform: translateY(100vh) rotate(45deg); opacity: 0; }
-      20% { opacity: 0.9; }
-      100% { transform: translateY(-20vh) rotate(45deg); opacity: 0; }
+      0% {
+        transform: translateY(100vh) rotate(45deg);
+        opacity: 0;
+      }
+      20% {
+        opacity: 0.9;
+      }
+      100% {
+        transform: translateY(-20vh) rotate(45deg);
+        opacity: 0;
+      }
     }
 
     /* Floating love messages */
@@ -75,10 +91,21 @@
     }
 
     @keyframes floatMsg {
-      0% { transform: translateY(100vh) translateX(0); opacity: 0; }
-      10% { opacity: 1; }
-      50% { transform: translateY(20vh) translateX(20px); opacity: 1; }
-      100% { transform: translateY(-20vh) translateX(-20px); opacity: 0; }
+      0% {
+        transform: translateY(100vh) translateX(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      50% {
+        transform: translateY(20vh) translateX(20px);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-20vh) translateX(-20px);
+        opacity: 0;
+      }
     }
 
     .card {
@@ -94,10 +121,18 @@
       backdrop-filter: blur(14px);
     }
 
+    .small-text {
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #ffb6d9;
+      margin-bottom: 6px;
+    }
+
     .from-jay {
       font-size: 14px;
       color: #ffcbe8;
-      margin-bottom: 8px;
+      margin-bottom: 4px;
     }
 
     h1 {
@@ -106,7 +141,9 @@
       line-height: 1.25;
     }
 
-    h1 span.name { color: #ff8fb6; }
+    h1 span.name {
+      color: #ff8fb6;
+    }
 
     .message {
       font-size: 0.98rem;
@@ -135,13 +172,9 @@
       padding: 10px 22px;
       font-size: 1rem;
       cursor: pointer;
-      transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
+      transition: transform 0.16s ease, box-shadow 0.16s ease,
+        background 0.16s ease;
     }
-
-    /* Better mobile tap behavior */
-    #noBtn, #yesBtn { touch-action: manipulation; }
 
     #yesBtn {
       background: linear-gradient(135deg, #ff6b9c, #ffb86c);
@@ -149,6 +182,7 @@
       box-shadow: 0 10px 25px rgba(255, 107, 156, 0.4);
       font-weight: 600;
     }
+
     #yesBtn:hover {
       transform: translateY(-1px) scale(1.04);
       box-shadow: 0 14px 30px rgba(255, 107, 156, 0.55);
@@ -156,5 +190,202 @@
 
     #noBtn {
       background: rgba(255, 255, 255, 0.08);
-      c
+      color: #ffe4ff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      position: relative;
+    }
 
+    #noBtn:hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .hint {
+      font-size: 0.8rem;
+      color: #ffcbe8;
+      opacity: 0.8;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .final-message {
+      font-size: 1.05rem;
+      margin-top: 14px;
+      color: #ffe4f7;
+      animation: popIn 0.45s ease forwards;
+      opacity: 0;
+      transform: translateY(8px) scale(0.97);
+    }
+
+    @keyframes popIn {
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 22px 18px 26px;
+      }
+
+      h1 {
+        font-size: 1.6rem;
+      }
+
+      .buttons {
+        gap: 10px;
+      }
+
+      button {
+        padding: 9px 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="hearts" id="hearts"></div>
+  <div class="floating-messages" id="messages"></div>
+
+  <div class="card">
+    <div class="small-text">February 14</div>
+    <div class="from-jay">From Jay 💕</div>
+    <h1>
+      Hey <span class="name">Aaliyah</span> ❤️
+    </h1>
+    <p class="message">
+      I could have written you a long message, but I thought a tiny website made just for you
+      would say it better than I ever could.
+    </p>
+    <p class="question">Will you be my Valentine?</p>
+
+    <div class="buttons">
+      <button id="yesBtn">Yes 🥰</button>
+      <button id="noBtn">No 😏</button>
+    </div>
+    <p class="hint">(Hint: every little heart floating around is Jay saying “I love you, Aaliyah”.)</p>
+
+    <p id="finalText" class="final-message hidden">
+      I knew you’d say yes.  
+      Now it’s a date — just you, me, and a whole lot of cheesy smiles. 💖
+    </p>
+  </div>
+
+  <script>
+    // Floating hearts
+    const heartsContainer = document.getElementById("hearts");
+    const createHeart = () => {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      const size = Math.random() * 14 + 10;
+      heart.style.width = size + "px";
+      heart.style.height = size + "px";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = 8 + Math.random() * 6 + "s";
+      heart.style.opacity = 0.4 + Math.random() * 0.6;
+      heartsContainer.appendChild(heart);
+      setTimeout(() => heart.remove(), 15000);
+    };
+    for (let i = 0; i < 30; i++) {
+      setTimeout(createHeart, i * 400);
+    }
+    setInterval(createHeart, 900);
+
+    // Floating love messages
+    const messagesContainer = document.getElementById("messages");
+    const loveTexts = [
+      "I love you, Aaliyah 💖",
+      "You’re my favourite person 🥺",
+      "Jay + Aaliyah = forever 💫",
+      "You make everything better 🌙",
+      "I choose you. Always. 💍",
+      "Can’t stop thinking about you 💭",
+      "You’re my safe place 🤍",
+      "Valentine today, forever tomorrow 💜"
+    ];
+
+    const createLoveMessage = () => {
+      const msg = document.createElement("div");
+      msg.className = "love-message";
+      msg.textContent = loveTexts[Math.floor(Math.random() * loveTexts.length)];
+      msg.style.left = Math.random() * 80 + "vw";
+      msg.style.animationDuration = 10 + Math.random() * 8 + "s";
+      messagesContainer.appendChild(msg);
+      setTimeout(() => msg.remove(), 18000);
+    };
+
+    for (let i = 0; i < 10; i++) {
+      setTimeout(createLoveMessage, i * 800);
+    }
+    setInterval(createLoveMessage, 2500);
+
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const finalText = document.getElementById("finalText");
+
+    // SUPER reactive NO button – jumps away before cursor touches it
+    let moveCount = 0;
+    let isGameOn = true;
+
+    document.addEventListener("mousemove", (e) => {
+      if (!isGameOn) return;
+
+      const rect = noBtn.getBoundingClientRect();
+      const cursorX = e.clientX;
+      const cursorY = e.clientY;
+
+      const btnCenterX = rect.left + rect.width / 2;
+      const btnCenterY = rect.top + rect.height / 2;
+
+      const distX = cursorX - btnCenterX;
+      const distY = cursorY - btnCenterY;
+      const distance = Math.sqrt(distX * distX + distY * distY);
+
+      const triggerDistance = 150; // how early it reacts
+
+      if (distance < triggerDistance) {
+        moveCount++;
+        const angle = Math.atan2(distY, distX) + Math.PI; // opposite direction
+        const jumpDistance = 200 + Math.random() * 200;
+
+        let newX = btnCenterX + Math.cos(angle) * jumpDistance;
+        let newY = btnCenterY + Math.sin(angle) * jumpDistance;
+
+        // Keep inside window
+        const padding = 60;
+        newX = Math.max(padding, Math.min(window.innerWidth - padding, newX));
+        newY = Math.max(padding, Math.min(window.innerHeight - padding, newY));
+
+        noBtn.style.position = "fixed";
+        noBtn.style.left = newX + "px";
+        noBtn.style.top = newY + "px";
+        noBtn.style.transform = "translate(-50%, -50%) scale(1.05)";
+        noBtn.style.transition =
+          "all 0.25s cubic-bezier(0.68,-0.55,0.27,1.55)";
+
+        const taunts = [
+          "Nope! Catch me 😼",
+          "Too slow, Jay! 😘",
+          "The answer is YES only 💘",
+          "Puppies say no to 'No' 🐶",
+          "You can’t click me 👀",
+          "Almost! Try again 🌀"
+        ];
+        noBtn.textContent = taunts[moveCount % taunts.length];
+      }
+    });
+
+    // YES click
+    yesBtn.addEventListener("click", () => {
+      isGameOn = false;
+      finalText.classList.remove("hidden");
+      yesBtn.disabled = true;
+      noBtn.disabled = true;
+      yesBtn.textContent = "Yesss! 💗";
+      noBtn.style.opacity = 0.4;
+      noBtn.style.transform = "scale(0.7)";
+    });
+  </script>
+</body>
+</html>
